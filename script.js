@@ -25,7 +25,17 @@ const musicButton =
    OPEN LETTER
 ========================= */
 
-openButton.addEventListener("click", () => {
+let opened = false;
+
+function openLetter() {
+
+    /*
+        Stop it from running twice
+        if she taps more than once.
+    */
+
+    if (opened) return;
+    opened = true;
 
     /*
         Open the envelope first.
@@ -35,10 +45,6 @@ openButton.addEventListener("click", () => {
 
     /*
         Start the music.
-
-        Because this happens after
-        the user clicks the button,
-        browsers normally allow it.
     */
 
     music.volume = 0.45;
@@ -76,7 +82,16 @@ openButton.addEventListener("click", () => {
 
     }, 1600);
 
-});
+}
+
+
+/*
+    Both the button and the envelope
+    open the letter.
+*/
+
+openButton.addEventListener("click", openLetter);
+envelope.addEventListener("click", openLetter);
 
 
 /* =========================
