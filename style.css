@@ -1,0 +1,892 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    color: #633d49;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff5f7 0%,
+            #ffe9ef 50%,
+            #ffdbe5 100%
+        );
+}
+
+
+/* =========================
+   OPENING PAGE
+========================= */
+
+.opening {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition:
+        opacity 1s ease,
+        transform 1s ease;
+}
+
+.opening.hide {
+    opacity: 0;
+
+    transform:
+        scale(1.05);
+
+    pointer-events: none;
+}
+
+.tulip-top {
+    width: 110px;
+    height: 110px;
+
+    margin-bottom: 15px;
+
+    border-radius: 50%;
+    overflow: hidden;
+
+    border: 4px solid white;
+
+    box-shadow:
+        0 8px 25px rgba(110, 50, 70, 0.2);
+
+    animation:
+        floating 3s ease-in-out infinite;
+}
+
+.tulip-top img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    display: block;
+}
+
+.small-title {
+    font-family: Arial, sans-serif;
+
+    text-transform: uppercase;
+
+    letter-spacing: 3px;
+
+    font-size: 12px;
+
+    color: #a16b7b;
+}
+
+.opening h1 {
+    font-size: clamp(55px, 12vw, 90px);
+
+    font-weight: normal;
+
+    color: #91465d;
+
+    margin-top: 5px;
+}
+
+.opening-text {
+    font-family: Arial, sans-serif;
+
+    margin-top: 5px;
+
+    color: #956474;
+}
+
+
+/* =========================
+   ENVELOPE
+========================= */
+
+.envelope {
+    width: 280px;
+    height: 180px;
+
+    position: relative;
+
+    margin-top: 45px;
+    margin-bottom: 30px;
+
+    cursor: pointer;
+
+    filter:
+        drop-shadow(
+            0 15px 20px rgba(100, 50, 70, 0.18)
+        );
+}
+
+.envelope-back {
+    position: absolute;
+
+    inset: 0;
+
+    background: #d9879d;
+
+    border-radius: 5px;
+}
+
+.envelope-front {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: #c96f89;
+
+    clip-path: polygon(
+        0 0,
+        50% 55%,
+        100% 0,
+        100% 100%,
+        0 100%
+    );
+
+    z-index: 4;
+}
+
+.envelope-flap {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: #e19aae;
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        50% 60%
+    );
+
+    transform-origin: top;
+
+    transition:
+        transform 1s ease;
+
+    z-index: 5;
+}
+
+.letter-paper {
+    position: absolute;
+
+    width: 230px;
+    height: 145px;
+
+    left: 25px;
+    top: 15px;
+
+    background: #fffaf5;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #a04c65;
+
+    font-size: 17px;
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.08);
+
+    z-index: 2;
+
+    transition:
+        transform 1s ease;
+}
+
+.envelope.open .envelope-flap {
+    transform:
+        rotateX(180deg);
+
+    z-index: 1;
+}
+
+.envelope.open .letter-paper {
+    transform:
+        translateY(-100px);
+
+    z-index: 3;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+#openButton {
+    border: none;
+
+    padding: 15px 30px;
+
+    border-radius: 50px;
+
+    background: #b6506d;
+
+    color: white;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(140, 60, 85, 0.2);
+
+    transition: 0.3s;
+}
+
+#openButton:hover {
+    transform:
+        translateY(-3px);
+
+    background: #983f59;
+}
+
+.hint {
+    margin-top: 15px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 11px;
+
+    color: #aa7181;
+}
+
+
+/* =========================
+   LETTER PAGE
+========================= */
+
+.letter-page {
+    display: none;
+
+    min-height: 100vh;
+
+    padding:
+        70px 20px 200px;
+
+    position: relative;
+
+    animation:
+        pageAppear 1.2s ease;
+}
+
+.letter-page.show {
+    display: block;
+}
+
+.letter-container {
+    width: 100%;
+
+    max-width: 700px;
+
+    margin:
+        auto;
+
+    background:
+        rgba(255, 253, 249, 0.88);
+
+    padding:
+        50px 35px;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 20px 60px rgba(110, 50, 70, 0.15);
+
+    position: relative;
+
+    z-index: 3;
+}
+
+
+/* Header */
+
+.letter-header {
+    text-align: center;
+
+    padding-bottom: 30px;
+
+    border-bottom:
+        1px solid #e8c6ce;
+}
+
+.letter-header .tulip {
+    font-size: 45px;
+}
+
+.letter-header h2 {
+    font-size: 42px;
+
+    font-weight: normal;
+
+    color: #91465d;
+
+    margin-top: 5px;
+}
+
+.letter-header p {
+    font-family: Arial, sans-serif;
+
+    font-size: 14px;
+
+    color: #9d6b78;
+
+    margin-top: 8px;
+}
+.header-photo {
+    width: 150px;
+    height: 160px;
+
+    margin: 0 auto 10px;
+    padding: 6px;
+
+    background: white;
+    border-radius: 18%;
+    overflow: hidden;
+
+    border: 4px solid white;
+
+    box-shadow:
+        0 8px 25px rgba(110, 50, 70, 0.2);
+
+    animation:
+        floating 3s ease-in-out infinite;
+}
+
+.header-photo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    display: block;
+}
+
+/* =========================
+   MUSIC PLAYER
+========================= */
+
+.music-player {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin:
+        30px 0;
+
+    padding:
+        15px 18px;
+
+    border-radius: 18px;
+
+    background:
+        #fff0f4;
+
+    border:
+        1px solid #f0d0d9;
+}
+
+.music-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #d97891;
+
+    font-size: 20px;
+}
+
+.music-info {
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    text-align: left;
+
+    gap: 3px;
+}
+
+.music-info strong {
+    color: #7f4053;
+}
+
+.music-info span {
+    font-family: Arial, sans-serif;
+
+    font-size: 11px;
+
+    color: #aa7280;
+}
+
+#musicButton {
+    width: 40px;
+    height: 40px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #b6506d;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   VIDEO
+========================= */
+
+.video-section {
+    text-align: center;
+
+    margin-top: 35px;
+}
+
+.video-section h3,
+.gallery-section h3 {
+    font-size: 25px;
+
+    font-weight: normal;
+
+    color: #91465d;
+}
+
+.video-wrapper {
+    margin-top: 18px;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 30px rgba(80, 40, 55, 0.15);
+
+    background: #1c1215;
+}
+
+.video-wrapper video {
+    display: block;
+
+    width: 100%;
+
+    max-height: 500px;
+
+    object-fit: contain;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message-section {
+    margin-top: 45px;
+
+    font-size: 16px;
+
+    line-height: 1.9;
+
+    text-align: left;
+}
+
+.message-section p {
+    margin-bottom: 20px;
+}
+
+.message-section .hello {
+    font-family: Georgia, serif;
+
+    font-size: 24px;
+
+    color: #8e455b;
+}
+
+.signature {
+    text-align: right;
+
+    font-style: italic;
+
+    margin-top: 35px;
+}
+
+.signature span {
+    font-size: 13px;
+
+    color: #a26a79;
+}
+
+
+/* =========================
+   GALLERY
+========================= */
+
+.gallery-section {
+    margin-top: 55px;
+
+    text-align: center;
+}
+
+.gallery-subtitle {
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+
+    color: #a36e7d;
+
+    margin-top: 5px;
+}
+
+.gallery {
+    margin-top: 25px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+.photo {
+    background: white;
+
+    padding: 10px;
+
+    box-shadow:
+        0 8px 20px rgba(80, 40, 55, 0.13);
+
+    position: relative;
+
+    transition:
+        transform 0.4s ease;
+}
+
+.photo img {
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+.photo span {
+    position: absolute;
+
+    right: 15px;
+    bottom: 15px;
+
+    color: white;
+
+    font-size: 20px;
+
+    text-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.photo:hover {
+    transform:
+        translateY(-7px)
+        rotate(0deg);
+}
+
+.photo1 {
+    transform: rotate(-2deg);
+}
+
+.photo2 {
+    transform: rotate(2deg);
+}
+
+.photo3 {
+    transform: rotate(1deg);
+}
+
+.photo4 {
+    transform: rotate(-2deg);
+}
+
+
+/* =========================
+   FINAL MESSAGE
+========================= */
+
+.final-message {
+    text-align: center;
+
+    margin-top: 60px;
+
+    padding-top: 40px;
+
+    border-top:
+        1px solid #e8c6ce;
+}
+
+.tulip3-box {
+    width: 200px;
+    height: 200px;
+
+    margin: 0 auto 20px;
+    padding: 6px;
+
+    background: white;
+    border-radius: 18%;
+    overflow: hidden;
+
+    border: 4px solid white;
+
+    box-shadow:
+        0 8px 25px rgba(110, 50, 70, 0.2);
+
+    animation:
+        floating 3s ease-in-out infinite;
+}
+
+.tulip3-box img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    display: block;
+}
+
+.final-message p {
+    margin:
+        20px auto;
+
+    max-width: 450px;
+
+    line-height: 1.8;
+}
+
+.final-message h3 {
+    font-weight: normal;
+
+    color: #91465d;
+
+    font-size: 21px;
+}
+
+.hearts {
+    margin-top: 20px;
+
+    color: #c65d78;
+
+    letter-spacing: 8px;
+}
+
+
+/* =========================
+   TULIP GARDEN
+========================= */
+
+.tulip-garden {
+    position: fixed;
+
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+
+    height: 100px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content:
+        space-around;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(255, 203, 216, 0.5)
+        );
+}
+
+.tulip-garden span {
+    font-size: 40px;
+
+    animation:
+        floating 3s ease-in-out infinite;
+}
+
+.tulip-garden span:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.tulip-garden span:nth-child(3) {
+    animation-delay: 0.8s;
+}
+
+.tulip-garden span:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+.tulip-garden span:nth-child(5) {
+    animation-delay: 0.6s;
+}
+
+.tulip-garden span:nth-child(6) {
+    animation-delay: 1s;
+}
+
+
+/* =========================
+   PETALS
+========================= */
+
+#petals span {
+    position: fixed;
+
+    top: -30px;
+
+    z-index: 10;
+
+    pointer-events: none;
+
+    animation:
+        fall linear forwards;
+
+    opacity: 0.6;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes floating {
+    0%, 100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-8px);
+    }
+}
+
+@keyframes pageAppear {
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+@keyframes fall {
+    from {
+        transform:
+            translateY(-30px)
+            rotate(0deg);
+
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0.6;
+    }
+
+    to {
+        transform:
+            translateY(110vh)
+            rotate(360deg);
+
+        opacity: 0;
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .letter-container {
+        padding:
+            35px 20px;
+    }
+
+    .letter-header h2 {
+        font-size: 34px;
+    }
+
+    .envelope {
+        transform:
+            scale(0.85);
+    }
+
+    .message-section {
+        font-size: 15px;
+    }
+
+    .gallery {
+        gap: 12px;
+    }
+
+    .tulip-garden span {
+        font-size: 28px;
+    }
+}
